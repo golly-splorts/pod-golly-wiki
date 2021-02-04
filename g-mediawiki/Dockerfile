@@ -22,6 +22,7 @@ RUN apt-get update && \
 
 # Extensions
 COPY mediawiki/extensions/ParserFunctions   /var/www/html/extensions/ParserFunctions
+COPY mediawiki/extensions/Scribunto         /var/www/html/extensions/Scribunto
 COPY mediawiki/extensions/Loops             /var/www/html/extensions/Loops
 COPY mediawiki/extensions/Variables         /var/www/html/extensions/Variables
 RUN chown -R www-data:www-data /var/www/html/*
