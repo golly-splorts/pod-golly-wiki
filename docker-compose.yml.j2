@@ -1,0 +1,90 @@
+version: "3.3"
+services:
+
+  tranquil_mysql:
+    container_name: tranquil_mysql
+    build: g-mysql
+    volumes:
+      - "tranquil_mysql_data:/var/lib/mysql"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 1m
+        max-file: "10"
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
+
+  tranquil_mw:
+    container_name: tranquil_mw
+    build: g-mediawiki
+    volumes:
+      - "tranquil_mw_data:/var/www/html"
+      # Only uncomment this line when you are initializing the wiki database:
+      # - "./g-mediawiki/mediawiki/mw-config:/var/www/html/mw-config"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 1m
+        max-file: "10"
+    environment:
+      - MEDIAWIKI_SITE_SERVER=https://wiki.charlesreid1.party
+      - MEDIAWIKI_SECRETKEY={{ golly_wiki_mw_secretkey }}
+      - MYSQL_HOST=tranquil_mysql
+      - MYSQL_DATABASE={{ golly_wiki_mysql_dbname }}
+      - MYSQL_USER={{ golly_wiki_mysql_user }}
+      - MYSQL_PASSWORD={{ golly_wiki_mysql_password }}
+    depends_on:
+      - tranquil_mysql
+
+  tranquil_nginx:
+    container_name: tranquil_nginx
+    restart: always
+    image: nginx
+    command: /bin/bash -c "nginx -g 'daemon off;'"
+    volumes:
+      - "./g-nginx/conf.d:/etc/nginx/conf.d:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/letsencrypt:/etc/letsencrypt"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 1m
+        max-file: "10"
+    depends_on:
+      - tranquil_mw
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      agent:
+        ipv4_address: 172.25.0.101
+      default:
+
+  tranquil_nginxexporter:
+    container_name: tranquil_nginxexporter
+    restart: always
+    image: nginx/nginx-prometheus-exporter
+    environment:
+      - TELEMETRY_PATH=/prometheus
+      - SCRAPE_URI=http://tranquil_nginx:8008/nginx_status
+      - RETRIES=10
+    depends_on:
+      - tranquil_nginx
+    ports:
+      - "{{ emmett_vpn_ip_addr }}:9113:9113"
+    networks:
+      agent:
+        ipv4_address: 172.25.0.100
+      default:
+
+networks:
+  agent:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.25.0.0/24
+
+volumes:
+  tranquil_mysql_data:
+  tranquil_mw_data:
+  tranquil_gitea_data:
