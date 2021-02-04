@@ -6,8 +6,9 @@ VOLUME ["/var/www/html"]
 
 # Install ImageMagick
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update && \
-    apt-get install -y build-essential \
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y build-essential \
             dvipng \
             ocaml \
             ghostscript \
