@@ -82,7 +82,7 @@ correct location inside the container like so:
 (excerpt from `docker-compose.yml`)
 
 ```
-  tranquil_mw:
+  ambivalent_mw:
     volumes:
       - "./g-mediawiki/mediawiki/mw-config:/var/www/html/mw-config"
 ```
