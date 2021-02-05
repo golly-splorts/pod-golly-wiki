@@ -27,7 +27,7 @@
 # Okay, that's it. that's the rant.
 set -e
 
-NAME="tranquil_mw"
+NAME="ambivalent_mw"
 echo "Installing LocalSettings.php into $NAME"
 docker cp mediawiki/LocalSettings.php $NAME:/var/www/html/LocalSettings.php
 docker exec -it $NAME /bin/bash -c "chown www-data:www-data /var/www/html/LocalSettings.php"

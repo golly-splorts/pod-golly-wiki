@@ -6,7 +6,7 @@
 # fix_LocalSettings.php.
 set -e
 
-NAME="tranquil_mw"
+NAME="ambivalent_mw"
 EXTENSIONS="ParserFunctions Loops Variables"
 
 echo "Replacing existing versions of MediaWiki extensions..."

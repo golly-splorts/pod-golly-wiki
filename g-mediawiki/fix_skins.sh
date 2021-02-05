@@ -6,7 +6,7 @@
 # fix_LocalSettings.php.
 set -e
 
-NAME="tranquil_mw"
+NAME="ambivalent_mw"
 echo "Installing skins into $NAME"
 docker exec -it $NAME /bin/bash -c 'rm -rf /var/www/html/skins'
 docker cp mediawiki/skins $NAME:/var/www/html/skins
