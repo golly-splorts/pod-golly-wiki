@@ -120,7 +120,7 @@ $wgDefaultSkin = "Medik";
 //$wgMedikColor = '#181a21';
 $wgMedikColor = '#211a18';
 $wgAllowSiteCSSOnRestrictedPages = true;
-$wgMedikShowLogo = 'sidebar';
+$wgMedikShowLogo = 'main';
 
 # Change to true for debugging
 $wgShowExceptionDetails=false;
