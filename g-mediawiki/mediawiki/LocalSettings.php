@@ -117,8 +117,10 @@ $wgDiff3 = "/usr/bin/diff3";
 #$wgDefaultSkin = "vector";
 wfLoadSkin('Medik');
 $wgDefaultSkin = "Medik";
-$wgMedikColor = '#181a21';
+//$wgMedikColor = '#181a21';
+$wgMedikColor = '#211a18';
 $wgAllowSiteCSSOnRestrictedPages = true;
+$wgMedikShowLogo = 'sidebar';
 
 # Change to true for debugging
 $wgShowExceptionDetails=false;
