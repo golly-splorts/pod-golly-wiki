@@ -1,1 +1,15 @@
+*.pyc
+
+# sensitive
+environment
+site
+root.password
+*.zip
+
+# ignore rendered templates
 docker-compose.yml
+*.timer
+*.service
+
+# ignore log files
+*.log
