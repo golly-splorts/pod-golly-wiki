@@ -71,7 +71,7 @@ services:
     depends_on:
       - ambivalent_nginx
     ports:
-      - "{{ emmett_vpn_ip_addr }}:9113:9113"
+      - "{{ golly_wiki_vpn_ip_addr }}:9113:9113"
     networks:
       agent:
         ipv4_address: 172.25.0.100
