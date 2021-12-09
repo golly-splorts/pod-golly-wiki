@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# multiple templates:
+# -------------------
+export POD_GOLLY_WIKI_DIR="{{ golly_wiki_pod_install_dir }}"
+export POD_GOLLY_WIKI_TLD="wiki.golly.life"
+export POD_GOLLY_WIKI_USER="{{ username }}"
+export POD_GOLLY_WIKI_VPN_IP_ADDR="{{ golly_wiki_vpn_ip_addr }}"
+
+# mediawiki:
+# ----------
+export POD_GOLLY_WIKI_MW_SECRET_KEY="{{ golly_wiki_mediawiki_secretkey }}"
+
+# mysql:
+# ------
+export POD_GOLLY_WIKI_MYSQL_PASSWORD="{{ golly_wiki_mysql_password }}"
+
+# aws:
+# ----
+export AWS_ACCESS_KEY_ID="{{ golly_wiki_backups_aws_access_key }}"
+export AWS_SECRET_ACCESS_KEY="{{ golly_wiki_backups_aws_secret_access_key }}"
+export AWS_DEFAULT_REGION="{{ golly_wiki_backups_aws_region }}"
+
+# backups and scripts:
+# --------------------
+export POD_GOLLY_WIKI_BACKUP_DIR="{{ golly_wiki_backups_dir }}"
+export POD_GOLLY_WIKI_BACKUP_S3BUCKET="{{ golly_wiki_backups_bucket }}"
+export POD_GOLLY_WIKI_CANARY_WEBHOOK="{{ golly_wiki_backups_canary_slack_url }}"
