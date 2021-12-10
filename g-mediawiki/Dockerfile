@@ -9,9 +9,6 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update
 RUN apt-get install -y apt-utils
 RUN apt-get install -y build-essential \
-            dvipng \
-            ocaml \
-            ghostscript \
             imagemagick
 
 # MediaWiki needs everything to be in one www folder
