@@ -1,0 +1,14 @@
+[Unit]
+Description=Backup canary service for pod-golly-wiki
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+StandardError=file:{{ golly_wiki_pod_install_dir }}/.pod-golly-wiki-canary.service.error.log
+StandardOutput=file:{{ golly_wiki_pod_install_dir }}/.pod-golly-wiki-canary.service.output.log
+ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/vp/bin/python
+ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/vp/bin/python3 {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/backups_canary.py'
+User=charles
+Group=charles
+
