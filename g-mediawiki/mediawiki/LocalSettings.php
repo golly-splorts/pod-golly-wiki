@@ -191,8 +191,8 @@ wfLoadExtension( 'ParserFunctions' );
 # Everything below is for Medik
 # and blaseball wiki templates.
 
-# Scribunto (lua?)
-wfLoadExtension( 'Scribunto' );
+# # Scribunto (lua?)
+# wfLoadExtension( 'Scribunto' );
 
 # Variables and Loops
 wfLoadExtension( 'Loops' );
