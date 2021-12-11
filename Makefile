@@ -92,23 +92,23 @@ ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/pod-golly-wiki.service /etc/systemd/system/pod-golly-wiki.service
-	#sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
-	#sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikifiles.{service,timer} /etc/systemd/system/.
-	#sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-aws.{service,timer} /etc/systemd/system/.
+	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
+	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikifiles.{service,timer} /etc/systemd/system/.
+	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-aws.{service,timer} /etc/systemd/system/.
 	#sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary/pod-golly-wiki-canary.{service,timer} /etc/systemd/system/.
 
 	sudo chmod 664 /etc/systemd/system/pod-golly-wiki*
 	sudo systemctl daemon-reload
 
 	sudo systemctl enable pod-golly-wiki
-	#sudo systemctl enable pod-golly-wiki-backups-wikidb.timer
-	#sudo systemctl enable pod-golly-wiki-backups-wikifiles.timer
-	#sudo systemctl enable pod-golly-wiki-backups-aws.timer
+	sudo systemctl enable pod-golly-wiki-backups-wikidb.timer
+	sudo systemctl enable pod-golly-wiki-backups-wikifiles.timer
+	sudo systemctl enable pod-golly-wiki-backups-aws.timer
 	#sudo systemctl enable pod-golly-wiki-canary.timer
 
-	#sudo systemctl start pod-golly-wiki-backups-wikidb.timer
-	#sudo systemctl start pod-golly-wiki-backups-wikifiles.timer
-	#sudo systemctl start pod-golly-wiki-backups-aws.timer
+	sudo systemctl start pod-golly-wiki-backups-wikidb.timer
+	sudo systemctl start pod-golly-wiki-backups-wikifiles.timer
+	sudo systemctl start pod-golly-wiki-backups-aws.timer
 	#sudo systemctl start pod-golly-wiki-canary.timer
 
 uninstall:
@@ -116,22 +116,22 @@ ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
 	-sudo systemctl disable pod-golly-wiki
-	#-sudo systemctl disable pod-golly-wiki-backups-wikidb.timer
-	#-sudo systemctl disable pod-golly-wiki-backups-wikifiles.timer
-	#-sudo systemctl disable pod-golly-wiki-backups-aws.timer
+	-sudo systemctl disable pod-golly-wiki-backups-wikidb.timer
+	-sudo systemctl disable pod-golly-wiki-backups-wikifiles.timer
+	-sudo systemctl disable pod-golly-wiki-backups-aws.timer
 	#-sudo systemctl disable pod-golly-wiki-canary.timer
 
-	## Leave the pod running!
-	## -sudo systemctl stop pod-golly-wiki
-	#-sudo systemctl stop pod-golly-wiki-backups-wikidb.timer
-	#-sudo systemctl stop pod-golly-wiki-backups-wikifiles.timer
-	#-sudo systemctl stop pod-golly-wiki-backups-aws.timer
+	# Leave the pod running!
+	# -sudo systemctl stop pod-golly-wiki
+	-sudo systemctl stop pod-golly-wiki-backups-wikidb.timer
+	-sudo systemctl stop pod-golly-wiki-backups-wikifiles.timer
+	-sudo systemctl stop pod-golly-wiki-backups-aws.timer
 	#-sudo systemctl stop pod-golly-wiki-canary.timer
 
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki.service
-	#-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikidb.{service,timer}
-	#-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikifiles.{service,timer}
-	#-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-aws.{service,timer}
+	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikidb.{service,timer}
+	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikifiles.{service,timer}
+	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-aws.{service,timer}
 	#-sudo rm -f /etc/systemd/system/pod-golly-wiki-canary.{service,timer}
 	sudo systemctl daemon-reload
 
