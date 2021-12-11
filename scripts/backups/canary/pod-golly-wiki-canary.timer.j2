@@ -1,0 +1,8 @@
+[Unit]
+Description=Timer to run the pod-golly-wiki backups canary
+
+[Timer]
+OnCalendar=Sun *-*-* 9:03:00
+
+[Install]
+WantedBy=timers.target
