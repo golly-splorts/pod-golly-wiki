@@ -44,6 +44,8 @@ def main():
 
     check_env_vars()
 
+    ignore_list = ['environment']
+
     p = os.path.join(repo_root,'**','*.j2')
     template_files = glob.glob(p, recursive=True)
 
@@ -59,6 +61,10 @@ def main():
         rname = tname[:-3]
         rpath = os.path.join(tdir, rname)
 
+        if rname in ignore_list:
+            print("Skipping template {tname}")
+            pass
+
         env = Environment(loader=FileSystemLoader(tdir))
     
         print(f"Rendering template {tname}:")
@@ -73,7 +79,7 @@ def main():
     
         # Write to file
         if os.path.exists(rpath) and not OVERWRITE:
-            msg = " [!!!] Error: file %s already exists! Continuing anyway..."%(rpath)
+            msg = " [!!!] Warning: file %s already exists! Skipping..."%(rpath)
             print(msg)
             time.sleep(1)
         else:
