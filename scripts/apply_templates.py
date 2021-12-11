@@ -62,8 +62,8 @@ def main():
         rpath = os.path.join(tdir, rname)
 
         if rname in ignore_list:
-            print("Skipping template {tname}")
-            pass
+            print(f"Skipping template on ignore list: {tname}")
+            continue
 
         env = Environment(loader=FileSystemLoader(tdir))
     
@@ -79,7 +79,7 @@ def main():
     
         # Write to file
         if os.path.exists(rpath) and not OVERWRITE:
-            msg = " [!!!] Warning: file %s already exists! Skipping..."%(rpath)
+            msg = "\n[!!!] Warning: file %s already exists! Skipping...\n"%(rpath)
             print(msg)
             time.sleep(1)
         else:
