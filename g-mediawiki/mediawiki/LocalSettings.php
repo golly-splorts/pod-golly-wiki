@@ -227,6 +227,11 @@ $wgTmpDirectory = "$wgUploadDirectory/tmp";
 $wgVerifyMimeType = false;
 $wgDebugLogFile = "/var/log/apache2/wiki.log";
 
+###############################
+# shut up jquery
+
+$wgIncludejQueryMigrate = false;
+
 ################################
 # Speed things up
 
