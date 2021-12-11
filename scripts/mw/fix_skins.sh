@@ -6,7 +6,7 @@ set -eux
 
 NAME="ambivalent_mw"
 
-MW_DIR="${POD_PRIVATE_WIKI_DIR}/g-mediawiki"
+MW_DIR="${POD_GOLLY_WIKI_DIR}/g-mediawiki"
 MW_CONF_DIR="${MW_DIR}/mediawiki"
 SKINS_DIR="${MW_CONF_DIR}/skins"
 

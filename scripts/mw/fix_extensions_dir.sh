@@ -8,7 +8,7 @@ NAME="ambivalent_mw"
 
 EXTENSIONS="SyntaxHighlight_GeSHi ParserFunctions EmbedVideo Math Fail2banlog"
 
-MW_DIR="${POD_PRIVATE_WIKI_DIR}/g-mediawiki"
+MW_DIR="${POD_GOLLY_WIKI_DIR}/g-mediawiki"
 MW_CONF_DIR="${MW_DIR}/mediawiki"
 EXT_DIR="${MW_CONF_DIR}/extensions"
 
