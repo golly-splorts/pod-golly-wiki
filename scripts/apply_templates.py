@@ -62,7 +62,7 @@ def main():
         rpath = os.path.join(tdir, rname)
 
         if rname in ignore_list:
-            print(f"Skipping template on ignore list: {tname}")
+            print(f"\nSkipping template on ignore list: {tname}\n")
             continue
 
         env = Environment(loader=FileSystemLoader(tdir))
