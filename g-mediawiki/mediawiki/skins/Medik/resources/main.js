@@ -34,14 +34,16 @@ $( function () {
 	 */
 
 	// immediately
-	medikNavigation();
+  // cmr modification
+	//medikNavigation();
 	medikRemoveEchoPopup();
 	$( '.mw-hamb' ).on( 'click', medikTogglehamb );
 
 	// repeat every 1 s for 10 s after DOM content loaded
 	window.medikVarI = 0;
 	window.medikTimer = window.setInterval( function () {
-		medikNavigation();
+    // cmr modification
+		//medikNavigation();
 		medikRemoveEchoPopup();
 		window.medikVarI++;
 		if ( window.medikVarI === 10 ) {
