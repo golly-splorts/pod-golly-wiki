@@ -30,8 +30,8 @@ services:
       - MEDIAWIKI_SITE_SERVER=https://wiki.charlesreid1.party
       - MEDIAWIKI_SECRETKEY={{ golly_wiki_mw_secretkey }}
       - MYSQL_HOST=ambivalent_mysql
-      - MYSQL_DATABASE={{ golly_wiki_mysql_dbname }}
-      - MYSQL_USER={{ golly_wiki_mysql_user }}
+      - MYSQL_DATABASE=wikidb
+      - MYSQL_USER=root
       - MYSQL_PASSWORD={{ golly_wiki_mysql_password }}
     depends_on:
       - ambivalent_mysql
