@@ -16,7 +16,7 @@ jinja_to_env = {
     "golly_wiki_server_name": "POD_GOLLY_WIKI_TLD",
     # docker-compose:
     "golly_wiki_vpn_ip_addr": "POD_GOLLY_WIKI_VPN_IP_ADDR",
-    "golly_wiki_mediawiki_secretkey": "POD_GOLLY_WIKI_MW_SECRET_KEY",
+    "golly_wiki_mw_secretkey": "POD_GOLLY_WIKI_MW_SECRET_KEY",
     "golly_wiki_mysql_password": "POD_GOLLY_WIKI_MYSQL_PASSWORD",
     # mediawiki: (no templates)
     # aws: (no templates)
