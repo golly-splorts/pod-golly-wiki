@@ -1,0 +1,12 @@
+[Unit]
+Description=Clean pod-golly-wiki backups older than N days
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+StandardError=file:{{ golly_wiki_pod_install_dir }}/.pod-golly-wiki-backups-cleanolderthan.service.error.log
+StandardOutput=file:{{ golly_wiki_pod_install_dir }}/.pod-golly-wiki-backups-cleanolderthan.service.output.log
+ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/backups/clean_olderthan.sh'
+User=charles
+Group=charles
