@@ -95,6 +95,7 @@ endif
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikifiles.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-aws.{service,timer} /etc/systemd/system/.
+	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-cleanolderthan.{service,timer} /etc/systemd/system/.
 	#sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary/pod-golly-wiki-canary.{service,timer} /etc/systemd/system/.
 
 	sudo chmod 664 /etc/systemd/system/pod-golly-wiki*
@@ -104,11 +105,13 @@ endif
 	sudo systemctl enable pod-golly-wiki-backups-wikidb.timer
 	sudo systemctl enable pod-golly-wiki-backups-wikifiles.timer
 	sudo systemctl enable pod-golly-wiki-backups-aws.timer
+	sudo systemctl enable pod-golly-wiki-backups-cleanolderthan.timer
 	#sudo systemctl enable pod-golly-wiki-canary.timer
 
 	sudo systemctl start pod-golly-wiki-backups-wikidb.timer
 	sudo systemctl start pod-golly-wiki-backups-wikifiles.timer
 	sudo systemctl start pod-golly-wiki-backups-aws.timer
+	sudo systemctl start pod-golly-wiki-backups-cleanolderthan.timer
 	#sudo systemctl start pod-golly-wiki-canary.timer
 
 uninstall:
@@ -119,6 +122,7 @@ endif
 	-sudo systemctl disable pod-golly-wiki-backups-wikidb.timer
 	-sudo systemctl disable pod-golly-wiki-backups-wikifiles.timer
 	-sudo systemctl disable pod-golly-wiki-backups-aws.timer
+	-sudo systemctl disable pod-golly-wiki-backups-cleanolderthan.timer
 	#-sudo systemctl disable pod-golly-wiki-canary.timer
 
 	# Leave the pod running!
@@ -126,12 +130,14 @@ endif
 	-sudo systemctl stop pod-golly-wiki-backups-wikidb.timer
 	-sudo systemctl stop pod-golly-wiki-backups-wikifiles.timer
 	-sudo systemctl stop pod-golly-wiki-backups-aws.timer
+	-sudo systemctl stop pod-golly-wiki-backups-cleanolderthan.timer
 	#-sudo systemctl stop pod-golly-wiki-canary.timer
 
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki.service
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikidb.{service,timer}
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikifiles.{service,timer}
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-aws.{service,timer}
+	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-cleanolderthan.{service,timer}
 	#-sudo rm -f /etc/systemd/system/pod-golly-wiki-canary.{service,timer}
 	sudo systemctl daemon-reload
 
