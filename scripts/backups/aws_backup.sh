@@ -52,7 +52,7 @@ if [ "$#" == "0" ]; then
 
     # Copy to AWS
     echo "Backing up directory ${POD_GOLLY_WIKI_BACKUP_DIR}/${LAST_BACKUP}"
-    aws s3 cp --only-show-errors --recursive ${POD_GOLLY_WIKI_BACKUP_DIR}/${LAST_BACKUP} s3://${POD_GOLLY_WIKI_BACKUP_S3BUCKET}/backups/${LAST_BACKUP}
+    aws s3 cp --only-show-errors --no-progress --recursive ${POD_GOLLY_WIKI_BACKUP_DIR}/${LAST_BACKUP} s3://${POD_GOLLY_WIKI_BACKUP_S3BUCKET}/backups/${LAST_BACKUP}
     echo "Done."
 
 else
