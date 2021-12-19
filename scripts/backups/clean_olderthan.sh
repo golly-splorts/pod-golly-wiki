@@ -6,7 +6,7 @@ set -eux
 
 # Number of days of backups to retain.
 # Everything older than this many days will be deleted
-N="60"
+N="45"
 
 function usage {
     set +x
@@ -39,7 +39,7 @@ if [ "$#" == "0" ]; then
     echo "Backup directory: ${POD_GOLLY_WIKI_BACKUP_DIR}"
     echo ""
 
-    echo "Cleaning backups directory $BACKUP_DIR"
+    echo "Cleaning backups directory $POD_GOLLY_WIKI_BACKUP_DIR"
     echo "The following files older than $N days will be deleted:"
     find ${POD_GOLLY_WIKI_BACKUP_DIR} -mtime +${N}
 
