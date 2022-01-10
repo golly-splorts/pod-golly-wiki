@@ -5,8 +5,8 @@ After=docker.service
 
 [Service]
 Type=oneshot
-StandardError=file:/var/log/pod-golly-wiki-backups-wikidb.service.error.log
-StandardOutput=file:/var/log/pod-golly-wiki-backups-wikidb.service.output.log
+StandardError=append:/var/log/pod-golly-wiki-backups-wikidb.service.log
+StandardOutput=append:/var/log/pod-golly-wiki-backups-wikidb.service.log
 ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/environment
 ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/backups/wikidb_dump.sh'
 User=charles
