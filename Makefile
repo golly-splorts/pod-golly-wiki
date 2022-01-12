@@ -98,6 +98,8 @@ endif
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-cleanolderthan.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary/pod-golly-wiki-canary.{service,timer} /etc/systemd/system/.
 
+	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/11-pod-golly-wiki-rsyslog.conf /etc/rsyslog.d/.
+
 	sudo chmod 664 /etc/systemd/system/pod-golly-wiki*
 	sudo systemctl daemon-reload
 
@@ -140,5 +142,7 @@ endif
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-cleanolderthan.{service,timer}
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-canary.{service,timer}
 	sudo systemctl daemon-reload
+
+	-sudo rm -f /etc/rsyslog.d/11-pod-golly-wiki-rsyslog.conf
 
 .PHONY: help
