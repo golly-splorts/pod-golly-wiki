@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer to renew certificates for pod-golly-wiki
+
+[Timer]
+# Run on the first Sunday of every month
+OnCalendar=Sun *-*-01..07 4:03:00
+
+[Install]
+WantedBy=timers.target
