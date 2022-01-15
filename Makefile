@@ -91,12 +91,9 @@ install:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
-ifneq ($(shell python -c 'import boto'),)
-	$(error Please install the botocore library using your python3/pip3 binary)
-endif
-ifneq ($(shell python -c 'import boto3'),)
-	$(error Please install the boto3 library using your python3/pip3 binary)
-endif
+	python -c 'import boto' || (echo "Please install the botocore library using python3 or pip3 binary"; exit 1)
+	python -c 'import boto3' || (echo "Please install the boto3 library using python3 or pip3 binary"; exit 1)
+
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/pod-golly-wiki.service /etc/systemd/system/pod-golly-wiki.service
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikifiles.{service,timer} /etc/systemd/system/.
@@ -126,10 +123,6 @@ uninstall:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
-	-rm -fr vp
-	-cd $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary
-	-cd $(POD_GOLLY_WIKI_DIR)
-
 	-sudo systemctl disable pod-golly-wiki
 	-sudo systemctl disable pod-golly-wiki-backups-wikidb.timer
 	-sudo systemctl disable pod-golly-wiki-backups-wikifiles.timer
