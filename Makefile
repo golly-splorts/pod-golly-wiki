@@ -91,6 +91,11 @@ install:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
+	cd $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary
+	test -d vp || python3 -m virtualenv vp
+	$(POD_GOLLY_WIKI_DIR)/vp/bin/pip3 install -r $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary/requirements.txt
+	cd $(POD_GOLLY_WIKI_DIR)
+
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/pod-golly-wiki.service /etc/systemd/system/pod-golly-wiki.service
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikifiles.{service,timer} /etc/systemd/system/.
@@ -120,6 +125,10 @@ uninstall:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
+	-cd $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary
+	-rm -fr vp
+	-cd $(POD_GOLLY_WIKI_DIR)
+
 	-sudo systemctl disable pod-golly-wiki
 	-sudo systemctl disable pod-golly-wiki-backups-wikidb.timer
 	-sudo systemctl disable pod-golly-wiki-backups-wikifiles.timer
