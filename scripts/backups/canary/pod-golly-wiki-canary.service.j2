@@ -5,13 +5,11 @@ After=docker.service
 
 [Service]
 Type=oneshot
-#StandardError=append:/var/log/pod-golly-wiki-canary.service.log
-#StandardOutput=append:/var/log/pod-golly-wiki-canary.service.log
 StandardError=syslog
 StandardOutput=syslog
 SyslogIdentifier=pod-golly-wiki-canary
-ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/vp/bin/python3
-ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/vp/bin/python3 {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/backups_canary.py'
+ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/environment
+ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; python3 {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/backups_canary.py'
 User=charles
 Group=charles
 
