@@ -91,8 +91,8 @@ install:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
-	python -c 'import botocore' || (echo "Please install the botocore library using python3 or pip3 binary"; exit 1)
-	python -c 'import boto3' || (echo "Please install the boto3 library using python3 or pip3 binary"; exit 1)
+	-python -c 'import botocore' || (echo "Please install the botocore library using python3 or pip3 binary"; exit 1)
+	-python -c 'import boto3' || (echo "Please install the boto3 library using python3 or pip3 binary"; exit 1)
 
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/pod-golly-wiki.service /etc/systemd/system/pod-golly-wiki.service
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
