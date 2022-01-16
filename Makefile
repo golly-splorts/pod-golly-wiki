@@ -107,6 +107,8 @@ endif
 	sudo chmod 664 /etc/systemd/system/pod-golly-wiki*
 	sudo systemctl daemon-reload
 
+	sudo systemctl restart rsyslog
+
 	sudo systemctl enable pod-golly-wiki
 	sudo systemctl enable pod-golly-wiki-backups-wikidb.timer
 	sudo systemctl enable pod-golly-wiki-backups-wikifiles.timer
@@ -153,5 +155,6 @@ endif
 	sudo systemctl daemon-reload
 
 	-sudo rm -f /etc/rsyslog.d/11-pod-golly-wiki-rsyslog.conf
+	-sudo systemctl restart rsyslog
 
 .PHONY: help
