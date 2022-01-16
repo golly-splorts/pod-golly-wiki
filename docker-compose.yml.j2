@@ -43,6 +43,7 @@ services:
     command: /bin/bash -c "nginx -g 'daemon off;'"
     volumes:
       - "./g-nginx/conf.d:/etc/nginx/conf.d:ro"
+      - "./g-nginx/robots:/var/www/robots:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/letsencrypt:/etc/letsencrypt"
     logging:
