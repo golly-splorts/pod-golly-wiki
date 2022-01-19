@@ -9,7 +9,6 @@ StandardError=syslog
 StandardOutput=syslog
 SyslogIdentifier=pod-golly-wiki-canary
 ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/environment
-ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; python3 {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/backups_canary.py'
+ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; /home/charles/.pyenv/shims/python3 {{ golly_wiki_pod_install_dir }}/scripts/backups/canary/backups_canary.py'
 User=charles
 Group=charles
-

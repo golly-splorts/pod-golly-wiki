@@ -56,13 +56,13 @@ help:
 templates:
 	@find * -name "*.service.j2" | xargs -I '{}' chmod 644 {}
 	@find * -name "*.timer.j2" | xargs -I '{}' chmod 644 {}
-	python3 $(POD_GOLLY_WIKI_DIR)/scripts/apply_templates.py
+	/home/charles/.pyenv/shims/python3 $(POD_GOLLY_WIKI_DIR)/scripts/apply_templates.py
 
 list-templates:
 	@find * -name "*.j2"
 
 clean-templates:
-	python3 $(POD_GOLLY_WIKI_DIR)/scripts/clean_templates.py
+	/home/charles/.pyenv/shims/python3 $(POD_GOLLY_WIKI_DIR)/scripts/clean_templates.py
 
 # Backups
 
@@ -91,8 +91,8 @@ install:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
 endif
-	-python3 -c 'import botocore' || (echo "Please install the botocore library using python3 or pip3 binary"; exit 1)
-	-python3 -c 'import boto3' || (echo "Please install the boto3 library using python3 or pip3 binary"; exit 1)
+	/home/charles/.pyenv/shims/python3 -c 'import botocore' || (echo "Please install the botocore library using python3 or pip3 binary"; exit 1)
+	/home/charles/.pyenv/shims/python3 -c 'import boto3' || (echo "Please install the boto3 library using python3 or pip3 binary"; exit 1)
 
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/pod-golly-wiki.service /etc/systemd/system/pod-golly-wiki.service
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-wikidb.{service,timer} /etc/systemd/system/.
