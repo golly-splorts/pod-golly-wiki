@@ -34,7 +34,7 @@ if [ "$#" == "0" ]; then
     sudo systemctl stop ${SERVICE}
     
     echo "Stop pod"
-    docker-compose -f {{ pod_golly_wiki_pod_install_dir }}/docker-compose.yml down
+    docker-compose -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml down
     
     echo "Run certbot renew"
     DOMS="wiki.golly.life"
@@ -52,7 +52,7 @@ if [ "$#" == "0" ]; then
     done
     
     echo "Start pod"
-    docker-compose -f {{ pod_golly_wiki_pod_install_dir }}/docker-compose.yml up -d
+    docker-compose -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml up -d
     
     echo "Enable and start system service ${SERVICE}"
     sudo systemctl enable ${SERVICE}
