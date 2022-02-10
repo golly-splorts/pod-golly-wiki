@@ -13,3 +13,5 @@ docker-compose.yml
 
 # ignore log files
 *.log
+
+scripts/certbot/renew_golly_wiki_certs.sh
