@@ -3,7 +3,7 @@
 # renew/run certbot on krash
 set -eux
 
-SERVICE="pod-golly-wiki"
+export SERVICE="pod-golly-wiki"
 
 function usage {
     set +x
@@ -37,18 +37,15 @@ if [ "$#" == "0" ]; then
     docker-compose -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml down
     
     echo "Run certbot renew"
-    DOMS="wiki.golly.life"
+    export DOMS="wiki.golly.life"
 
-    # subdomains
-    for SUB in $SUBS; do
-        for DOM in $DOMS; do
-            certbot certonly \
-                --standalone \
-                --non-interactive \
-                --agree-tos \
-                --email ch4zm.of.hellmouth@gmail.com \
-                -d ${SUB}.${DOM}
-        done
+    for DOM in $DOMS; do
+        certbot certonly \
+            --standalone \
+            --non-interactive \
+            --agree-tos \
+            --email ch4zm.of.hellmouth@gmail.com \
+            -d ${DOM}
     done
     
     echo "Start pod"
