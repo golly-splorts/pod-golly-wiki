@@ -100,7 +100,7 @@ endif
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-aws.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/pod-golly-wiki-backups-cleanolderthan.{service,timer} /etc/systemd/system/.
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/canary/pod-golly-wiki-canary.{service,timer} /etc/systemd/system/.
-	#sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/certbot/pod-golly-wiki-certbot.{service,timer} /etc/systemd/system/.
+	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/certbot/pod-golly-wiki-certbot.{service,timer} /etc/systemd/system/.
 
 	sudo cp $(POD_GOLLY_WIKI_DIR)/scripts/backups/11-pod-golly-wiki-rsyslog.conf /etc/rsyslog.d/.
 
@@ -115,14 +115,14 @@ endif
 	sudo systemctl enable pod-golly-wiki-backups-aws.timer
 	sudo systemctl enable pod-golly-wiki-backups-cleanolderthan.timer
 	sudo systemctl enable pod-golly-wiki-canary.timer
-	#sudo systemctl enable pod-golly-wiki-certbot.timer
+	sudo systemctl enable pod-golly-wiki-certbot.timer
 
 	sudo systemctl start pod-golly-wiki-backups-wikidb.timer
 	sudo systemctl start pod-golly-wiki-backups-wikifiles.timer
 	sudo systemctl start pod-golly-wiki-backups-aws.timer
 	sudo systemctl start pod-golly-wiki-backups-cleanolderthan.timer
 	sudo systemctl start pod-golly-wiki-canary.timer
-	#sudo systemctl start pod-golly-wiki-certbot.timer
+	sudo systemctl start pod-golly-wiki-certbot.timer
 
 uninstall:
 ifeq ($(shell which systemctl),)
@@ -134,7 +134,7 @@ endif
 	-sudo systemctl disable pod-golly-wiki-backups-aws.timer
 	-sudo systemctl disable pod-golly-wiki-backups-cleanolderthan.timer
 	-sudo systemctl disable pod-golly-wiki-canary.timer
-	#-sudo systemctl disable pod-golly-wiki-certbot.timer
+	-sudo systemctl disable pod-golly-wiki-certbot.timer
 
 	# Leave the pod running!
 	# -sudo systemctl stop pod-golly-wiki
@@ -143,7 +143,7 @@ endif
 	-sudo systemctl stop pod-golly-wiki-backups-aws.timer
 	-sudo systemctl stop pod-golly-wiki-backups-cleanolderthan.timer
 	-sudo systemctl stop pod-golly-wiki-canary.timer
-	#-sudo systemctl stop pod-golly-wiki-certbot.timer
+	-sudo systemctl stop pod-golly-wiki-certbot.timer
 
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki.service
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-wikidb.{service,timer}
@@ -151,7 +151,7 @@ endif
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-aws.{service,timer}
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-backups-cleanolderthan.{service,timer}
 	-sudo rm -f /etc/systemd/system/pod-golly-wiki-canary.{service,timer}
-	#-sudo rm -f /etc/systemd/system/pod-golly-wiki-certbot.{service,timer}
+	-sudo rm -f /etc/systemd/system/pod-golly-wiki-certbot.{service,timer}
 	sudo systemctl daemon-reload
 
 	-sudo rm -f /etc/rsyslog.d/11-pod-golly-wiki-rsyslog.conf
