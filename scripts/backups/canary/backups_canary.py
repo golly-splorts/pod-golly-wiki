@@ -24,7 +24,7 @@ def main():
         alert(msg)
 
     # verify there is a backup newer than N days
-    newer_backups = subprocess.getoutput(f'find {backup_dir} -mtime -{N}').split('\n')
+    newer_backups = subprocess.getoutput(f'find {backup_dir}/* -mtime -{N}').split('\n')
     if len(newer_backups)==1 and newer_backups[0]=='':
         msg = "Local Backups Error:\n"
         msg += f"The backup directory `{backup_dir}` is missing backup files from the last {N} day(s)!"
@@ -32,7 +32,7 @@ def main():
 
     newest_backup_name = subprocess.getoutput(f'ls -t {backup_dir} | head -n1')
     newest_backup_path = os.path.join(backup_dir, newest_backup_name)
-    newest_backup_files = subprocess.getoutput(f'find {newest_backup_path} -type f').split('\n')
+    newest_backup_files = subprocess.getoutput(f'find {newest_backup_path}/* -type f').split('\n')
 
     # verify the most recent backup directory is not empty
     if len(newest_backup_files)==1 and newer_backups[0]=='':
