@@ -1,7 +1,6 @@
 #!/bin/bash
 # 
 # fix LocalSettings.php in the mediawiki container.
-
 set -eux
 
 NAME="ambivalent_mw"

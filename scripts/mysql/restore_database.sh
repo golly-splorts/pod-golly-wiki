@@ -6,7 +6,7 @@
 # Note that this expects the .sql dump
 # to create its own databases.
 # Use the --databases flag with mysqldump.
-set -eux
+set -eu
 
 function usage {
     echo ""
@@ -43,14 +43,14 @@ function usage {
 # because of all these one-off 
 # "whoopsie we don't do that" problems.
 
-CONTAINER_NAME="ambivalent_mysql"
-TARGET=$(basename $1)
-TARGET_DIR=$(dirname $1)
-
-
 if [[ "$#" -eq 1 ]];
 then
 
+	CONTAINER_NAME="ambivalent_mysql"
+	TARGET=$(basename $1)
+	TARGET_DIR=$(dirname $1)
+
+	set -x
     # Step 1: Copy the sql dump into the container
     docker cp $1 ${CONTAINER_NAME}:/tmp/${TARGET}
 

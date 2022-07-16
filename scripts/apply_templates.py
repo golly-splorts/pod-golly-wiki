@@ -8,7 +8,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
 # Should existing files be overwritten
-OVERWRITE = True
+OVERWRITE = False
 
 # Map of jinja variables to environment variables
 jinja_to_env = {

@@ -12,4 +12,3 @@ ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/environment
 ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/backups/aws_backup.sh'
 User=charles
 Group=charles
-
