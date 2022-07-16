@@ -1,7 +1,6 @@
 #!/bin/bash
 # 
 # fix extensions dir in the mediawiki container
-
 set -eux
 
 NAME="ambivalent_mw"

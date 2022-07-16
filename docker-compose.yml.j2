@@ -3,7 +3,11 @@ services:
 
   ambivalent_mysql:
     container_name: ambivalent_mysql
-    build: g-mysql
+    build:
+      context: g-mysql
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
     volumes:
       - "ambivalent_mysql_data:/var/lib/mysql"
     logging:
@@ -88,4 +92,3 @@ networks:
 volumes:
   ambivalent_mysql_data:
   ambivalent_mw_data:
-  ambivalent_gitea_data:
