@@ -8,5 +8,5 @@ Type=oneshot
 StandardError=syslog
 StandardOutput=syslog
 SyslogIdentifier=pod-golly-wiki-certbot
-ExecStartPre=/usr/bin/test -f {{ pod_golly_wiki_pod_install_dir }}/environment
-ExecStart=/bin/bash -ac '. {{ pod_golly_wiki_pod_install_dir }}/environment; {{ pod_golly_wiki_pod_install_dir }}/scripts/certbot/renew_golly_wiki_certs.sh'
+ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/environment
+ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/certbot/renew_golly_wiki_certs.sh'
