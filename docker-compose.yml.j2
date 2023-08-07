@@ -62,7 +62,7 @@ services:
       - "443:443"
     networks:
       agent:
-        ipv4_address: 172.25.0.101
+        ipv4_address: 172.26.0.101
       default:
 
   ambivalent_nginxexporter:
@@ -79,7 +79,7 @@ services:
       - "{{ golly_wiki_vpn_ip_addr }}:9113:9113"
     networks:
       agent:
-        ipv4_address: 172.25.0.100
+        ipv4_address: 172.26.0.100
       default:
 
 networks:
@@ -87,7 +87,7 @@ networks:
     driver: bridge
     ipam:
       config:
-      - subnet: 172.25.0.0/24
+      - subnet: 172.26.0.0/24
 
 volumes:
   ambivalent_mysql_data:
