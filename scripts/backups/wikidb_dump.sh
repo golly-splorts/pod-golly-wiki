@@ -37,7 +37,7 @@ fi
 
 if [ "$#" == "0" ]; then
 
-    TARGET="wikidb_${STAMP}.sql"
+    TARGET="wikidb_${TIMESTAMP}.sql"
     BACKUP_DIR="${POD_GOLLY_WIKI_BACKUP_DIR}/${DATESTAMP}"
     BACKUP_TARGET="${BACKUP_DIR}/${TARGET}"
 
