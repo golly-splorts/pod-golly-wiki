@@ -124,6 +124,12 @@ endif
 	sudo systemctl start pod-golly-wiki-canary.timer
 	sudo systemctl start pod-golly-wiki-certbot.timer
 
+	sudo chown syslog:syslog /var/log/pod-golly-wiki-backups-aws.service.log
+	sudo chown syslog:syslog /var/log/pod-golly-wiki-backups-cleanolderthan.service.log
+	sudo chown syslog:syslog /var/log/pod-golly-wiki-backups-wikidb.service.log
+	sudo chown syslog:syslog /var/log/pod-golly-wiki-backups-wikifiles.service.log
+	sudo chown syslog:syslog /var/log/pod-golly-wiki-canary.service.log
+
 uninstall:
 ifeq ($(shell which systemctl),)
 	$(error Please run this make command on a system with systemctl installed)
