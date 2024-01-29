@@ -45,7 +45,7 @@ if [ "$#" == "0" ]; then
     echo "pod-golly-wiki: wikidb_dump.sh"
     echo "--------------------------------"
     echo ""
-    echo "Backup directory: ${POD_GOLLY_WIKI_BACKUP_DIR}"
+    echo "Backup directory: ${BACKUP_DIR}"
     echo "Backup target: ${BACKUP_TARGET}"
     echo ""
 
