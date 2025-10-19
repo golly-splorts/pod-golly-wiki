@@ -1,4 +1,4 @@
-FROM mediawiki:1.34
+FROM mediawiki:1.35
 
 EXPOSE 8989
 
