@@ -54,15 +54,19 @@ if [ "$#" == "0" ]; then
     DOCKER=$(which docker)
     DOCKERX="${DOCKER} exec -t"
 
-    echo "Step 1: Compress wiki files inside container"
-    ${DOCKERX} ${CONTAINER_NAME} /bin/tar czf /tmp/${TARGET} /var/www/html/images
+    # echo "Step 1: Compress wiki files inside container"
+    # ${DOCKERX} ${CONTAINER_NAME} /bin/tar czf /tmp/${TARGET} /var/www/html/images
 
-    echo "Step 2: Copy tar.gz file out of container"
-    mkdir -p $(dirname "${BACKUP_TARGET}")
-    ${DOCKER} cp ${CONTAINER_NAME}:/tmp/${TARGET} ${BACKUP_TARGET}
+    # echo "Step 2: Copy tar.gz file out of container"
+    # mkdir -p $(dirname "${BACKUP_TARGET}")
+    # ${DOCKER} cp ${CONTAINER_NAME}:/tmp/${TARGET} ${BACKUP_TARGET}
 
-    echo "Step 3: Clean up tar.gz file"
-    ${DOCKERX} ${CONTAINER_NAME} /bin/rm -f /tmp/${TARGET}
+    # echo "Step 3: Clean up tar.gz file"
+    # ${DOCKERX} ${CONTAINER_NAME} /bin/rm -f /tmp/${TARGET}
+
+    # One-liner to compress the file to stdout, and stream that to the backup target on the host machine
+    echo "Compressing and streaming wiki files from container..."
+    ${DOCKER} exec ${CONTAINER_NAME} /bin/tar czf - /var/www/html/images > "${BACKUP_TARGET}"
 
     echo "Successfully wrote wikifiles dump to file: ${BACKUP_TARGET}"
     echo "Done."
