@@ -1,2 +1,10 @@
 User-agent: *
-Disallow: /w/
+Disallow: /w/api.php
+Disallow: /w/includes/
+Disallow: /w/languages/
+Disallow: /w/maintenance/
+Disallow: /w/resources/
+Disallow: /w/serialized/
+Disallow: /w/skins/
+Disallow: /wiki/Special:
+Allow: /wiki/
