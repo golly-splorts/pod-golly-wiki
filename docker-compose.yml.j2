@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
       args:
         - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
+    restart: unless-stopped
+    command: --performance-schema=0 --innodb-buffer-pool-size=128M --max-connections=50
     volumes:
       - "ambivalent_mysql_data:/var/lib/mysql"
     logging:
