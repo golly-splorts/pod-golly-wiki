@@ -45,7 +45,7 @@ services:
   ambivalent_nginx:
     container_name: ambivalent_nginx
     restart: always
-    image: nginx
+    image: nginx:1.25
     command: /bin/bash -c "nginx -g 'daemon off;'"
     volumes:
       - "./g-nginx/conf.d:/etc/nginx/conf.d:ro"
