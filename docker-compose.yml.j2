@@ -15,7 +15,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: 1m
+        max-size: 2m
         max-file: "10"
     environment:
       - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
@@ -30,7 +30,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: 1m
+        max-size: 2m
         max-file: "10"
     environment:
       - MEDIAWIKI_SITE_SERVER=https://wiki.golly.life
@@ -55,7 +55,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: 1m
+        max-size: 2m
         max-file: "10"
     depends_on:
       - ambivalent_mw
