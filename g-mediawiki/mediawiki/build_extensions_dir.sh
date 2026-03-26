@@ -15,7 +15,7 @@ then
     git clone https://github.com/wikimedia/mediawiki-extensions-ParserFunctions.git ${Extension}
     (
     cd ${Extension}
-    git checkout --track remotes/origin/REL1_34
+    git checkout --track remotes/origin/REL1_35
     )
 else
     echo "Skipping ${Extension}"
@@ -27,7 +27,7 @@ then
     git clone https://github.com/wikimedia/mediawiki-extensions-Loops.git ${Extension}
     (
     cd ${Extension}
-    git checkout --track remotes/origin/REL1_34
+    git checkout --track remotes/origin/REL1_35
     )
 else
     echo "Skipping ${Extension}"
@@ -39,7 +39,7 @@ then
     git clone https://github.com/wikimedia/mediawiki-extensions-Variables.git ${Extension}
     (
     cd ${Extension}
-    git checkout --track remotes/origin/REL1_34
+    git checkout --track remotes/origin/REL1_35
     )
 else
     echo "Skipping ${Extension}"
@@ -51,7 +51,7 @@ then
     git clone https://github.com/wikimedia/mediawiki-extensions-Scribunto.git ${Extension}
     (
     cd ${Extension}
-    git checkout --track remotes/origin/REL1_34
+    git checkout --track remotes/origin/REL1_35
     )
 else
     echo "Skipping ${Extension}"
