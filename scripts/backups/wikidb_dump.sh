@@ -56,12 +56,7 @@ if [ "$#" == "0" ]; then
 
     echo "Running mysqldump inside the mysql container"
 
-    # this works, except the first line is a stupid warning about passwords
-    ${DOCKERX} ${CONTAINER_NAME} sh -c 'exec mysqldump wikidb --databases -uroot -p"$MYSQL_ROOT_PASSWORD" --default-character-set=binary' > ${BACKUP_TARGET}
-
-    # trim stupid first line warning
-    tail -n +2 ${BACKUP_TARGET} > ${BACKUP_TARGET}.tmp
-    mv ${BACKUP_TARGET}.tmp ${BACKUP_TARGET}
+    ${DOCKERX} ${CONTAINER_NAME} sh -c 'exec mysqldump --defaults-extra-file=/root/.mysql.rootpw.cnf wikidb --databases --default-character-set=binary' > ${BACKUP_TARGET}
 
     echo "Successfully wrote SQL dump to file: ${BACKUP_TARGET}"
     echo "Done."
