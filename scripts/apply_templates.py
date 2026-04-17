@@ -18,6 +18,7 @@ jinja_to_env = {
     "golly_wiki_vpn_ip_addr": "POD_GOLLY_WIKI_VPN_IP_ADDR",
     "golly_wiki_mw_secretkey": "POD_GOLLY_WIKI_MW_SECRET_KEY",
     "golly_wiki_mysql_password": "POD_GOLLY_WIKI_MYSQL_PASSWORD",
+    "golly_wiki_mysql_wikiuser_password": "POD_GOLLY_WIKI_MYSQL_WIKIUSER_PASSWORD",
     # mediawiki: (no templates)
     # aws: (no templates)
 }
