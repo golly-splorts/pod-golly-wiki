@@ -49,17 +49,51 @@ if [ "$#" == "0" ]; then
     echo "Backup target: ${BACKUP_TARGET}"
     echo ""
 
-    mkdir -p ${BACKUP_DIR}
-
-    DOCKER=$(which docker)
-    DOCKERX="${DOCKER} exec -t"
+    mkdir -p "${BACKUP_DIR}"
 
     echo "Running mysqldump inside the mysql container"
 
-    ${DOCKERX} ${CONTAINER_NAME} sh -c 'exec mysqldump --defaults-extra-file=/root/.mysql.rootpw.cnf wikidb --databases --default-character-set=binary' > ${BACKUP_TARGET}
+    # Pull the root password out of the container so we don't duplicate the
+    # secret on the host, and forward it in via MYSQL_PWD (which mysqldump
+    # reads automatically). No -t: a PTY corrupts --default-character-set=binary
+    # output (LF→CRLF translation on binary blobs) and its small kernel buffer
+    # can deadlock on large dumps.
+    set +x
+    MYSQL_PWD="$(docker exec "${CONTAINER_NAME}" printenv MYSQL_ROOT_PASSWORD)"
+    export MYSQL_PWD
+    set -x
 
-    echo "Successfully wrote SQL dump to file: ${BACKUP_TARGET}"
-    echo "Done."
+    docker exec -i \
+        -e MYSQL_PWD \
+        "${CONTAINER_NAME}" \
+        sh -c 'exec mysqldump \
+                  --user=root \
+                  --single-transaction \
+                  --quick \
+                  --routines \
+                  --triggers \
+                  --events \
+                  --default-character-set=binary \
+                  --databases wikidb' \
+        > "${BACKUP_TARGET}"
+
+    unset MYSQL_PWD
+
+    # A complete mysqldump always ends with "-- Dump completed on ...".
+    # Missing trailer means the dump is truncated and not restorable.
+    if ! tail -c 200 "${BACKUP_TARGET}" | grep -q 'Dump completed on'; then
+        echo "ERROR: dump file ${BACKUP_TARGET} is missing the completion trailer." >&2
+        echo "       mysqldump did not finish successfully." >&2
+        exit 2
+    fi
+
+    size=$(stat -c %s "${BACKUP_TARGET}")
+    if [ "${size}" -lt $((50 * 1024 * 1024)) ]; then
+        echo "ERROR: dump file ${BACKUP_TARGET} is only ${size} bytes; suspicious." >&2
+        exit 3
+    fi
+
+    echo "Dump OK: ${BACKUP_TARGET} (${size} bytes)"
 
 else
     usage
