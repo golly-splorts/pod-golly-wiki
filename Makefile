@@ -33,13 +33,34 @@ help:
 	@echo "--------------------------------------------------"
 	@echo "                   MediaWiki:"
 	@echo ""
-	@echo "make mw-build-extensions  Build the MediaWiki extensions directory"
+	@echo "make mw-build-extensions  Build the MediaWiki extensions directory (blue/old)"
 	@echo ""
-	@echo "make mw-fix-extensions    Copy the built extensions directory into the MW container"
+	@echo "make mw-fix-extensions    Copy the built extensions directory into the MW container (blue/old)"
 	@echo ""
-	@echo "make mw-fix-localsettings Copy the LocalSettings.php file into the MW container"
+	@echo "make mw-fix-localsettings Copy the LocalSettings.php file into the MW container (blue/old)"
 	@echo ""
-	@echo "make mw-fix-skins         Copy the skins directory into the MW container"
+	@echo "make mw-fix-skins         Copy the skins directory into the MW container (blue/old)"
+	@echo ""
+	@echo "--------------------------------------------------"
+	@echo "          Green Stack (MW 1.39 + MySQL 8.0):"
+	@echo ""
+	@echo "make mw-build-extensions-139  Build extensions for MW 1.39"
+	@echo ""
+	@echo "make mw-new-fix-extensions    Copy extensions into the new MW container"
+	@echo ""
+	@echo "make mw-new-fix-localsettings Copy LocalSettings.php into the new MW container"
+	@echo ""
+	@echo "make mw-new-fix-skins         Copy skins into the new MW container"
+	@echo ""
+	@echo "make mw-new-update-db         Run update.php in the new MW container"
+	@echo ""
+	@echo "make mw-migrate-db            Dump DB from old MySQL and load into new MySQL"
+	@echo ""
+	@echo "make mw-migrate-images        Copy uploaded images to new MW volume"
+	@echo ""
+	@echo "make switchover               Switch nginx to green stack (MW 1.39)"
+	@echo ""
+	@echo "make rollback                 Roll back nginx to blue stack (MW 1.35)"
 	@echo ""
 	@echo "--------------------------------------------------"
 	@echo "                   Startup Services:"
@@ -78,6 +99,9 @@ clean-backups:
 mw-build-extensions:
 	$(POD_GOLLY_WIKI_DIR)/scripts/mw/build_extensions_dir.sh
 
+mw-build-extensions-139:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/build_extensions_dir_139.sh
+
 mw-fix-extensions: mw-build-extensions
 	$(POD_GOLLY_WIKI_DIR)/scripts/mw/build_extensions_dir.sh
 
@@ -86,6 +110,32 @@ mw-fix-localsettings:
 
 mw-fix-skins:
 	$(POD_GOLLY_WIKI_DIR)/scripts/mw/fix_skins.sh
+
+# Green stack (MW 1.39 + MySQL 8.0) targets
+
+mw-new-fix-extensions:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/fix_extensions_dir_new.sh
+
+mw-new-fix-localsettings:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/fix_LocalSettings_new.sh
+
+mw-new-fix-skins:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/fix_skins_new.sh
+
+mw-new-update-db:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/update_wikidb_new.sh
+
+mw-migrate-db:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/migrate_db_to_new.sh
+
+mw-migrate-images:
+	$(POD_GOLLY_WIKI_DIR)/scripts/mw/migrate_images_to_new.sh
+
+switchover:
+	$(POD_GOLLY_WIKI_DIR)/scripts/switchover_to_green.sh
+
+rollback:
+	$(POD_GOLLY_WIKI_DIR)/scripts/rollback_to_blue.sh
 
 install:
 ifeq ($(shell which systemctl),)

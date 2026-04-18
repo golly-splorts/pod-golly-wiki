@@ -4,7 +4,7 @@
 # from the mediawiki docker container.
 set -eux
 
-CONTAINER_NAME="ambivalent_mw"
+CONTAINER_NAME="${GOLLY_WIKI_MW_CONTAINER:-ambivalent_mw}"
 DATESTAMP="`date +"%Y%m%d"`"
 TIMESTAMP="`date +"%Y%m%d_%H%M%S"`"
 

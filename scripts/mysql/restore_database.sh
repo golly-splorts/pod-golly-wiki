@@ -46,7 +46,7 @@ function usage {
 if [[ "$#" -eq 1 ]];
 then
 
-	CONTAINER_NAME="ambivalent_mysql"
+	CONTAINER_NAME="${GOLLY_WIKI_MYSQL_CONTAINER:-ambivalent_mysql}"
 	TARGET=$(basename $1)
 	TARGET_DIR=$(dirname $1)
 

@@ -70,6 +70,52 @@ services:
         ipv4_address: 172.26.0.101
       default:
 
+  # ========== GREEN STACK (MW 1.39 + MySQL 8.0) ==========
+
+  ambivalent_mysql_new:
+    container_name: ambivalent_mysql_new
+    build:
+      context: g-mysql-new
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
+    restart: unless-stopped
+    command: --performance-schema=0 --innodb-buffer-pool-size=128M --max-connections=50
+    volumes:
+      - "ambivalent_mysql_new_data:/var/lib/mysql"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 2m
+        max-file: "10"
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
+      - MYSQL_DATABASE=wikidb
+      - MYSQL_USER=wikiuser
+      - MYSQL_PASSWORD={{ golly_wiki_mysql_wikiuser_password }}
+
+  ambivalent_mw_new:
+    container_name: ambivalent_mw_new
+    build: g-mediawiki-new
+    volumes:
+      - "ambivalent_mw_new_data:/var/www/html"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 2m
+        max-file: "10"
+    environment:
+      - MEDIAWIKI_SITE_SERVER=https://wiki.golly.life
+      - MEDIAWIKI_SECRETKEY={{ golly_wiki_mw_secretkey }}
+      - MYSQL_HOST=ambivalent_mysql_new
+      - MYSQL_DATABASE=wikidb
+      - MYSQL_USER=wikiuser
+      - MYSQL_PASSWORD={{ golly_wiki_mysql_wikiuser_password }}
+    depends_on:
+      - ambivalent_mysql_new
+
+  # ========== END GREEN STACK ==========
+
   ambivalent_nginxexporter:
     container_name: ambivalent_nginxexporter
     restart: always
@@ -97,3 +143,5 @@ networks:
 volumes:
   ambivalent_mysql_data:
   ambivalent_mw_data:
+  ambivalent_mysql_new_data:
+  ambivalent_mw_new_data:

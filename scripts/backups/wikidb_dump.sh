@@ -4,7 +4,7 @@
 # resulting SQL file to the specified backup directory.
 set -eux
 
-CONTAINER_NAME="ambivalent_mysql"
+CONTAINER_NAME="${GOLLY_WIKI_MYSQL_CONTAINER:-ambivalent_mysql}"
 DATESTAMP="`date +"%Y%m%d"`"
 TIMESTAMP="`date +"%Y%m%d_%H%M%S"`"
 

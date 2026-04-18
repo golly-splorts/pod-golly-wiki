@@ -16,10 +16,10 @@ if [ -z "${DUMP}" ] || [ ! -f "${DUMP}" ]; then
     exit 1
 fi
 
-LIVE_CONTAINER="ambivalent_mysql"
+LIVE_CONTAINER="${GOLLY_WIKI_MYSQL_CONTAINER:-ambivalent_mysql}"
 TEST_CONTAINER="wikidb_restore_test_$$"
 TEST_PW="temp_restore_test_pw_$$"
-IMAGE="mysql:5.7"
+IMAGE="mysql:8.0"
 
 cleanup() {
     docker stop "${TEST_CONTAINER}" >/dev/null 2>&1 || true
