@@ -503,7 +503,7 @@ class MedikTemplate extends BaseTemplate {
 			// old toolbox hook support (use: [ 'SkinTemplateToolboxEnd' => [ &$skin, true ] ])
 			'hooks' => '',
 			// what to pass to makeListItem() as options array
-			'list-item' => null
+			'list-item' => []
 		];
 
 		// Handle the different $msg possibilities
