@@ -1,11 +1,10 @@
 ####################
 # wiki.golly.life
 # https/443
-# GREEN STACK (MW 1.39 + MySQL 8.0)
 ####################
 
 
-# default
+# default 
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
@@ -30,13 +29,13 @@ server {
         proxy_set_header X-Real-IP  $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header Host $host;
-        proxy_pass http://ambivalent_mw_new:8989/wiki/;
+        proxy_pass http://ambivalent_mw:8989/wiki/;
     }
 
     location /w/ {
         proxy_set_header X-Real-IP  $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header Host $host;
-        proxy_pass http://ambivalent_mw_new:8989/w/;
+        proxy_pass http://ambivalent_mw:8989/w/;
     }
 }
