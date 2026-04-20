@@ -26,23 +26,14 @@ class SkinMedik extends SkinTemplate {
 			$out->addMeta( 'viewport', 'width=device-width, initial-scale=1' );
 			$out->addModuleStyles( [ 'skins.medik.responsive' ] );
 		} else {
-			$out->addModuleStyles( [ 'skins.medik.unresponsive' ] );
+			$out->addModuleStyles( [ 'skins.medik.noresponsive' ] );
 		}
 
 		$out->addModuleStyles( [
-			'mediawiki.skinning.interface',
-			'mediawiki.skinning.content.externallinks',
 			'skins.medik'
 		] );
 
 		$out->addModules( [ 'skins.medik.js' ] );
-	}
-
-	/**
-	 * @param OutputPage $out OutputPage
-	 */
-	public function setupSkinUserCss( OutputPage $out ) {
-		parent::setupSkinUserCss( $out );
 	}
 
 	/**
