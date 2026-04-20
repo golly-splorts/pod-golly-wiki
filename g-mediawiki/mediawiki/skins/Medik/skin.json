@@ -58,6 +58,14 @@
 	"ResourceModules": {
 		"skins.medik": {
 			"class": "ResourceLoaderSkinModule",
+			"features": {
+				"normalize": true,
+				"elements": true,
+				"content": true,
+				"interface": true,
+				"logo": true,
+				"content-links": true
+			},
 			"styles": {
 				"resources/libraries/bootstrap.min.css": {
 					"media": "screen"

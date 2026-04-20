@@ -503,7 +503,7 @@ class MedikTemplate extends BaseTemplate {
 			// old toolbox hook support (use: [ 'SkinTemplateToolboxEnd' => [ &$skin, true ] ])
 			'hooks' => '',
 			// what to pass to makeListItem() as options array
-			'list-item' => null
+			'list-item' => []
 		];
 
 		// Handle the different $msg possibilities
@@ -626,7 +626,7 @@ class MedikTemplate extends BaseTemplate {
 	protected function deprecatedHookHack( $hook, $hookOptions = [] ) {
 		$hookContents = '';
 		ob_start();
-		Hooks::run( $hook, $hookOptions );
+		\MediaWiki\MediaWikiServices::getInstance()->getHookContainer()->run( $hook, $hookOptions );
 		$hookContents = ob_get_contents();
 		ob_end_clean();
 		if ( !trim( $hookContents ) ) {

@@ -15,3 +15,4 @@ docker-compose.yml
 *.log
 
 scripts/certbot/renew_golly_wiki_certs.sh
+g-mediawiki/mediawiki/extensions/

@@ -13,8 +13,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 # The protocol and server name to use in fully-qualified URLs
-# $wgServer = 'https://bespin.charles';
-# $wgCanonicalServer = 'https://bespin.charles';
 $wgServer = 'https://wiki.golly.life';
 $wgCanonicalServer = 'https://wiki.golly.life';
 
@@ -24,7 +22,6 @@ $wgResourceBasePath = $wgScriptPath;
 
 # The URL path to the logo.  Make sure you change this from the default,
 # or else you'll overwrite your logo when you upgrade!
-#$wgLogo = "$wgResourceBasePath/skins/Bootstrap2/defcon.png"; # resources/assets/wiki.png";
 $wgLogo = "$wgResourceBasePath/assets/gollylogo.png";
 
 # UPO means: this is also a user preference option
@@ -48,7 +45,7 @@ $wgDBpassword = getenv('MYSQL_PASSWORD');
 # MySQL specific settings
 $wgDBprefix = "";
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
-$wgDBmysql5 = true;
+# $wgDBmysql5 removed — deprecated in MW 1.39
 
 # Shared memory settings
 $wgMainCacheType = CACHE_ACCEL;
@@ -87,7 +84,6 @@ $wgPingback = false;
 # Linux server, this will need to be set to the name of an
 # available UTF-8 locale
 $wgShellLocale = "C.UTF-8";
-#$wgShellLocale = "en_US.utf8"; # from original pod-charlesreid1
 
 # Site language code, should be one of the list in ./languages/data/Names.php
 $wgLanguageCode = "en";
@@ -113,11 +109,8 @@ $wgDiff3 = "/usr/bin/diff3";
 ###############################################
 ################# set skin ####################
 
-#wfLoadSkin('Vector');
-#$wgDefaultSkin = "vector";
 wfLoadSkin('Medik');
 $wgDefaultSkin = "Medik";
-//$wgMedikColor = '#181a21';
 $wgMedikColor = '#211a18';
 $wgAllowSiteCSSOnRestrictedPages = true;
 $wgMedikShowLogo = 'main';
@@ -125,17 +118,12 @@ $wgMedikShowLogo = 'main';
 # Change to true for debugging
 $wgShowExceptionDetails=false;
 
-# When you make changes to this configuration file, this will make
-# sure that cached pages are cleared.
-session_save_path("tmp");
 $wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) );
 
 ############################################################
 ############# Ch4zm-Modified Settings ####################
 
 # Allow external images (to do this, simply insert the image's URL)
-# http://url.for/some/image.png
-# But these cannot be resized.
 $wgAllowExternalImages = true;
 
 # Use ImageMagick
@@ -148,7 +136,6 @@ $wgAllowdisplayTitle=true;
 $wgPutIPinRC=false;
 
 # Getting some weird "Error creating thumbnail: Invalid thumbnail parameters" messages w/ thumbnail
-# http://www.gossamer-threads.com/lists/wiki/mediawiki/169439
 $wgMaxImageArea=64000000;
 $wgMaxShellMemory=0;
 
@@ -182,21 +169,19 @@ wfLoadExtension( 'WikiEditor' );
 
 ##############################
 # Parser functions
-# http://www.mediawiki.org/wiki/Extension:ParserFunctions
-# http://en.wikipedia.org/wiki/Template_talk:Navbox
-
 wfLoadExtension( 'ParserFunctions' );
 
 #############################
-# Everything below is for Medik
-# and blaseball wiki templates.
-
-# # Scribunto (lua?)
-# wfLoadExtension( 'Scribunto' );
-
 # Variables and Loops
 wfLoadExtension( 'Loops' );
 wfLoadExtension( 'Variables' );
+
+#############################
+# Parsoid (required for REST API with_html endpoint)
+wfLoadExtension( 'Parsoid', "$IP/vendor/wikimedia/parsoid/extension.json" );
+$wgParsoidSettings = [
+    'useSelser' => true,
+];
 
 #############################################
 # Fix cookies crap
@@ -223,14 +208,8 @@ $wgNewUserLog=true;
 $wgUploadPath = "$wgScriptPath/images";
 $wgUploadDirectory = "$IP/images";
 $wgTmpDirectory = "$wgUploadDirectory/tmp";
-#$wgUploadBaseUrl = false; # not sure about why this one too...
 $wgVerifyMimeType = false;
 $wgDebugLogFile = "/var/log/apache2/wiki.log";
-
-###############################
-# shut up jquery
-
-$wgIncludejQueryMigrate = false;
 
 ################################
 # Speed things up
@@ -238,14 +217,9 @@ $wgIncludejQueryMigrate = false;
 # Use file caching
 $wgUseFileCache = true;
 $wgFileCacheDirectory = "$IP/cache";
-$wgShowIPinHeader = false;
 
 # Cache sidebar
 $wgEnableSidebarCache = true;
-
-# Disable page counters
-$wgDisableCounters = true;
-$wgHitcounterUpdateFreq = 500;
 
 # Enable miser mode
 $wgMiserMode = true;

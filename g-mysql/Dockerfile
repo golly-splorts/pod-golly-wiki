@@ -1,5 +1,4 @@
-FROM mysql:5.7
-MAINTAINER charles@charlesreid1.com
+FROM mysql:8.0
 
 # make mysql data a volume
 VOLUME ["/var/lib/mysql"]
