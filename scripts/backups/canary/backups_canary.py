@@ -32,10 +32,10 @@ def main():
 
     newest_backup_name = subprocess.getoutput(f'ls -t {backup_dir} | head -n1')
     newest_backup_path = os.path.join(backup_dir, newest_backup_name)
-    newest_backup_files = subprocess.getoutput(f'find {newest_backup_path}/* -type f').split('\n')
+    newest_backup_files = subprocess.getoutput(f'find {newest_backup_path} -type f').split('\n')
 
     # verify the most recent backup directory is not empty
-    if len(newest_backup_files)==1 and newer_backups[0]=='':
+    if len(newest_backup_files)==1 and newest_backup_files[0]=='':
         msg = "Local Backups Error:\n"
         msg += f"The most recent backup directory `{newest_backup_path}` is empty!"
         alert(msg)
@@ -46,6 +46,24 @@ def main():
             msg = "Local Backups Error:\n"
             msg += f"The most recent backup directory `{newest_backup_path}` contains an empty backup file!\n"
             msg += f"Backup file name: {backup_file}!"
+            alert(msg)
+
+    # verify .sql dumps end with the mysqldump completion trailer.
+    # A non-empty file can still be truncated mid-row (e.g. PTY deadlock,
+    # net_write_timeout) — without this check, a 439 MB partial dump looks
+    # healthy to a size-only canary.
+    for backup_file in newest_backup_files:
+        if not backup_file.endswith('.sql'):
+            continue
+        with open(backup_file, 'rb') as f:
+            f.seek(0, os.SEEK_END)
+            f.seek(max(0, f.tell() - 512))
+            tail = f.read()
+        if b'Dump completed on' not in tail:
+            msg = "Local Backups Error:\n"
+            msg += f"SQL backup file `{backup_file}` is missing the "
+            msg += "`-- Dump completed on ...` trailer.\n"
+            msg += "mysqldump did not finish — the dump is truncated and not restorable."
             alert(msg)
 
     # verify the most recent backup files exist in the s3 backups bucket
@@ -64,10 +82,11 @@ def check_exists(bucket_name, bucket_path):
             # File does not exist
             msg = "S3 Backups Error:\n"
             msg += f"Failed to find the file `{bucket_path}` in bucket `{bucket_name}`"
+            alert(msg)
         else:
-            # Problem accessing backups on bucket
             msg = "S3 Backups Error:\n"
             msg += f"Failed to access the file `{bucket_path}` in bucket `{bucket_name}`"
+            alert(msg)
 
 
 def alert(msg):
