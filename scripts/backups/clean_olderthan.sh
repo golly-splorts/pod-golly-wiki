@@ -41,10 +41,14 @@ if [ "$#" == "0" ]; then
 
     echo "Cleaning backups directory $POD_GOLLY_WIKI_BACKUP_DIR"
     echo "The following files older than $N days will be deleted:"
-    find ${POD_GOLLY_WIKI_BACKUP_DIR} -mtime +${N}
+    find "${POD_GOLLY_WIKI_BACKUP_DIR}" -mtime +${N}
 
     echo "Deleting files"
-    find ${POD_GOLLY_WIKI_BACKUP_DIR} -mtime +${N} -delete
+    find "${POD_GOLLY_WIKI_BACKUP_DIR}" -mtime +${N} -delete
+
+    echo "Removing empty backup directories"
+    find "${POD_GOLLY_WIKI_BACKUP_DIR}" -mindepth 1 -type d -empty -delete
+
     echo "Done"
 
 else
