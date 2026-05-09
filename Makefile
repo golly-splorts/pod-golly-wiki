@@ -92,7 +92,7 @@ backups:
 	$(POD_GOLLY_WIKI_DIR)/scripts/backups/wikifiles_dump.sh
 
 clean-backups:
-	$(POD_GOLLY_WIKI_DIR)/scripts/clean_templates.sh
+	$(POD_GOLLY_WIKI_DIR)/scripts/backups/clean_olderthan.sh
 
 # MediaWiki
 
