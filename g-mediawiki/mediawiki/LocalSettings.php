@@ -209,7 +209,8 @@ $wgUploadPath = "$wgScriptPath/images";
 $wgUploadDirectory = "$IP/images";
 $wgTmpDirectory = "$wgUploadDirectory/tmp";
 $wgVerifyMimeType = false;
-$wgDebugLogFile = "/var/log/apache2/wiki.log";
+# Disabled — was writing an unbounded log inside the container, eating disk
+# $wgDebugLogFile = "/var/log/apache2/wiki.log";
 
 ################################
 # Speed things up
@@ -224,5 +225,5 @@ $wgEnableSidebarCache = true;
 # Enable miser mode
 $wgMiserMode = true;
 
-# Run outstanding jobs every 10 page loads
-$wgJobRunRate = 10;
+# Run a job on ~1% of page loads (default is 1 per request; 10 was way too aggressive)
+$wgJobRunRate = 0.01;
