@@ -23,7 +23,10 @@ COPY --chown=www-data:www-data mediawiki/skins /var/www/html/skins
 COPY --chown=www-data:www-data mediawiki/LocalSettings.php /var/www/html/LocalSettings.php
 RUN chmod 600 /var/www/html/LocalSettings.php
 
-# Apache conf file
+# Apache MPM prefork tuning (stock default of 150 workers is way too high for this box)
+COPY apache/mods/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
+
+# Apache vhost conf file
 COPY apache/*.conf /etc/apache2/sites-enabled/
 RUN a2enmod rewrite
 
