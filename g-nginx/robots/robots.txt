@@ -6,5 +6,6 @@ Disallow: /w/maintenance/
 Disallow: /w/resources/
 Disallow: /w/serialized/
 Disallow: /w/skins/
+Disallow: /w/index.php?title=Special:
 Disallow: /wiki/Special:
 Allow: /wiki/
