@@ -28,7 +28,7 @@ COPY apache/mods/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 
 # Apache vhost conf file
 COPY apache/*.conf /etc/apache2/sites-enabled/
-RUN a2enmod rewrite
+RUN a2enmod rewrite remoteip
 
 # PHP conf file
 COPY php/php.ini /usr/local/etc/php/
