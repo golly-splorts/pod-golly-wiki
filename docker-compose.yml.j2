@@ -101,6 +101,14 @@ networks:
     ipam:
       config:
       - subnet: 172.26.0.0/24
+  # `default` is shared with the golly ai-slackbots stack (mediawiki-mcp-golly,
+  # wiki-golly-bot, golly-personas-bot attach to it as `pod-golly-wiki_default`).
+  # Mark it external here so `docker-compose down` never tries to remove the
+  # network out from under those containers. Bootstrap: the pod-golly-wiki.service
+  # unit ensures the network exists before `up`.
+  default:
+    external: true
+    name: pod-golly-wiki_default
 
 volumes:
   ambivalent_mysql_data:

@@ -10,3 +10,7 @@ StandardOutput=syslog
 SyslogIdentifier=pod-golly-wiki-certbot
 ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/environment
 ExecStart=/bin/bash -ac '. {{ golly_wiki_pod_install_dir }}/environment; {{ golly_wiki_pod_install_dir }}/scripts/certbot/renew_golly_wiki_certs.sh'
+# Safety net: even if the renew script dies mid-run (SIGKILL, OOM, etc.), always
+# re-enable and restart the pod. `-` prefix means "ignore failures of these lines".
+ExecStopPost=-/usr/bin/systemctl enable pod-golly-wiki
+ExecStopPost=-/usr/bin/systemctl start pod-golly-wiki

@@ -7,8 +7,15 @@ After=docker.service
 Restart=always
 StandardError=null
 StandardOutput=null
-# docker network prune -f added 2024-05-05 after a stale network interface caused an outage
-ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml && docker network prune -f
+ExecStartPre=/usr/bin/test -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml
+# `docker network prune -f` used to be here (added 2024-05-05 after a stale
+# network interface caused an outage), but pruning is unsafe now that the
+# `pod-golly-wiki_default` network is shared with the golly ai-slackbots stack:
+# a prune while no pod-golly-wiki containers are attached could remove a network
+# the slackbots are actively using. Instead, ensure the shared network exists
+# (idempotent inspect-or-create) before compose brings the stack up. The compose
+# file declares `default` as `external: true, name: pod-golly-wiki_default`.
+ExecStartPre=/bin/bash -c '/usr/bin/docker network inspect pod-golly-wiki_default >/dev/null 2>&1 || /usr/bin/docker network create --driver bridge pod-golly-wiki_default'
 ExecStart=/usr/local/bin/docker-compose -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml up
 ExecStop=/usr/local/bin/docker-compose  -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml stop
 

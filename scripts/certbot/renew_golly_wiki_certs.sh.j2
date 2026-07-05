@@ -1,9 +1,10 @@
 #!/bin/bash
 #
 # renew/run certbot
-set -x
+set -ux
 
 export SERVICE="pod-golly-wiki"
+COMPOSE_FILE="{{ golly_wiki_pod_install_dir }}/docker-compose.yml"
 
 function usage {
     set +x
@@ -17,6 +18,20 @@ function usage {
     exit 1;
 }
 
+# Always bring the pod back up, even if something above failed.
+# Mirrors the pod-charlesreid1 fix: a prior incident there had certbot's
+# `docker-compose down` fail on lingering network endpoints, exit non-zero,
+# and leave the pod down for hours. The trap guarantees restart regardless.
+function bring_pod_back_up {
+    set +e
+    echo "[trap] Ensuring pod ${SERVICE} is enabled and running"
+    docker-compose -f "${COMPOSE_FILE}" up -d
+    sudo systemctl enable ${SERVICE}
+    sudo systemctl start ${SERVICE}
+    echo "[trap] Done"
+}
+trap bring_pod_back_up EXIT
+
 if [ "$(id -u)" != "0" ]; then
     echo ""
     echo ""
@@ -26,37 +41,46 @@ if [ "$(id -u)" != "0" ]; then
     exit 1;
 fi
 
-if [ "$#" == "0" ]; then
-
-    # disable system service that will re-spawn docker pod
-    echo "Disable and stop system service ${SERVICE}"
-    sudo systemctl disable ${SERVICE}
-    sudo systemctl stop ${SERVICE}
-    
-    echo "Stop pod"
-    docker-compose -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml down
-    
-    echo "Run certbot renew"
-    export DOMS="wiki.golly.life"
-
-    for DOM in $DOMS; do
-        certbot certonly \
-            --standalone \
-            --non-interactive \
-            --agree-tos \
-            --email ch4zm.of.hellmouth@gmail.com \
-            -d ${DOM}
-    done
-    
-    echo "Start pod"
-    docker-compose -f {{ golly_wiki_pod_install_dir }}/docker-compose.yml up -d
-    
-    echo "Enable and start system service ${SERVICE}"
-    sudo systemctl enable ${SERVICE}
-    sudo systemctl start ${SERVICE}
-
-    echo "Done"
-
-else
+if [ "$#" != "0" ]; then
     usage
 fi
+
+# disable system service that will re-spawn docker pod
+echo "Disable and stop system service ${SERVICE}"
+sudo systemctl disable ${SERVICE} || true
+sudo systemctl stop ${SERVICE} || true
+
+echo "Stop pod"
+# `down` can fail if a container hasn't fully detached from the network yet.
+# Retry a couple of times, then force-remove leftover containers so certbot
+# standalone can bind :80. The `pod-golly-wiki_default` network is declared
+# `external: true` in the compose file so `down` won't try to remove it
+# (it's shared with the golly ai-slackbots stack).
+for attempt in 1 2 3; do
+    if docker-compose -f "${COMPOSE_FILE}" down; then
+        break
+    fi
+    echo "docker-compose down failed (attempt ${attempt}), sleeping and retrying"
+    sleep 5
+done
+
+# Belt-and-suspenders: kill any pod containers still around.
+LEFTOVERS=$(docker ps -q --filter "name=ambivalent_")
+if [ -n "${LEFTOVERS}" ]; then
+    echo "Force-removing leftover pod containers: ${LEFTOVERS}"
+    docker rm -f ${LEFTOVERS} || true
+fi
+
+echo "Run certbot renew"
+export DOMS="wiki.golly.life"
+
+for DOM in $DOMS; do
+    certbot certonly \
+        --standalone \
+        --non-interactive \
+        --agree-tos \
+        --email ch4zm.of.hellmouth@gmail.com \
+        -d ${DOM} || echo "certbot failed for ${DOM}, continuing"
+done
+
+echo "Done (trap will restart pod)"
