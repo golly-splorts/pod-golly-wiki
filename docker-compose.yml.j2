@@ -27,6 +27,8 @@ services:
       - MYSQL_DATABASE=wikidb
       - MYSQL_USER=wikiuser
       - MYSQL_PASSWORD={{ golly_wiki_mysql_wikiuser_password }}
+    networks:
+      - backend
 
   ambivalent_mw:
     container_name: ambivalent_mw
@@ -52,6 +54,9 @@ services:
       - MYSQL_PASSWORD={{ golly_wiki_mysql_wikiuser_password }}
     depends_on:
       - ambivalent_mysql
+    networks:
+      - frontend
+      - backend
 
   ambivalent_nginx:
     container_name: ambivalent_nginx
@@ -74,41 +79,19 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      agent:
-        ipv4_address: 172.26.0.101
-      default:
+      - frontend
 
-  ambivalent_nginxexporter:
-    container_name: ambivalent_nginxexporter
-    restart: always
-    image: nginx/nginx-prometheus-exporter
-    environment:
-      - TELEMETRY_PATH=/prometheus
-      - SCRAPE_URI=http://ambivalent_nginx:8008/nginx_status
-      - RETRIES=10
-    depends_on:
-      - ambivalent_nginx
-    ports:
-      - "{{ golly_wiki_vpn_ip_addr }}:9113:9113"
-    networks:
-      agent:
-        ipv4_address: 172.26.0.100
-      default:
 
 networks:
-  agent:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 172.26.0.0/24
-  # `default` is shared with the golly ai-slackbots stack (mediawiki-mcp-golly,
-  # wiki-golly-bot, golly-personas-bot attach to it as `pod-golly-wiki_default`).
+  # `frontend` is shared with the golly ai-slackbots stack (mediawiki-mcp-golly,
+  # wiki-golly-bot, golly-personas-bot attach to it as `pod-golly-wiki_frontend`).
   # Mark it external here so `docker-compose down` never tries to remove the
   # network out from under those containers. Bootstrap: the pod-golly-wiki.service
   # unit ensures the network exists before `up`.
-  default:
+  frontend:
     external: true
-    name: pod-golly-wiki_default
+    name: pod-golly-wiki_frontend
+  backend:
 
 volumes:
   ambivalent_mysql_data:
