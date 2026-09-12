@@ -32,6 +32,7 @@ services:
 
   ambivalent_mw:
     container_name: ambivalent_mw
+    restart: unless-stopped
     build: g-mediawiki
     volumes:
       - "ambivalent_mw_data:/var/www/html"
