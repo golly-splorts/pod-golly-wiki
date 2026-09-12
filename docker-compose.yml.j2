@@ -21,7 +21,7 @@ services:
       resources:
         limits:
           cpus: '0.50'
-          memory: 384M
+          memory: 512M
     environment:
       - MYSQL_ROOT_PASSWORD={{ golly_wiki_mysql_password }}
       - MYSQL_DATABASE=wikidb
@@ -44,8 +44,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.80'
-          memory: 512M
+          cpus: '1.50'
+          memory: 1G
     environment:
       - MEDIAWIKI_SITE_SERVER=https://wiki.golly.life
       - MEDIAWIKI_SECRETKEY={{ golly_wiki_mw_secretkey }}
